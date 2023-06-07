@@ -36,5 +36,9 @@
 /* Enable caps-lock LED*/
 #define CAPS_LOCK_LED_INDEX 60
 
+/* Enable ts-mic-mute LEDs*/
+#define MIC_MUTE_LED_INDEX 40
+#define SOUND_MUTE_LED_INDEX 16
+
 /* Enable NUM_LOCK_LED_INDEX */
 // #define NUM_LOCK_LED_INDEX 37
