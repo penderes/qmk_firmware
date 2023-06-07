@@ -67,6 +67,53 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+//relight specific key on press
+#    if defined(MIC_MUTE_LED_INDEX)
+bool mic_isred = false;
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_user(keycode, record)) {
+        return false;
+    }
+    switch (keycode) {
+        case KC_F23:
+            if (record->event.pressed) {
+                if (mic_isred == true) {
+                    RGB_MATRIX_INDICATOR_SET_COLOR(MIC_MUTE_LED_INDEX, 0, 255, 0);
+                    mic_isred = false;
+                } else {
+                    RGB_MATRIX_INDICATOR_SET_COLOR(MIC_MUTE_LED_INDEX, 255, 0, 0);
+                    mic_isred = true;
+                }
+            }
+            return false;
+    }
+    return true;
+}
+#    endif // MIC_MUTE_LED_INDEX
+
+#    if defined(SOUND_MUTE_LED_INDEX)
+bool sound_isred = false;
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_user(keycode, record)) {
+        return false;
+    }
+    switch (keycode) {
+        case KC_F24:
+            if (record->event.pressed) {
+                if (sound_isred == true) {
+                    RGB_MATRIX_INDICATOR_SET_COLOR(SOUND_MUTE_LED_INDEX, 0, 255, 0);
+                    sound_isred = false;
+                } else {
+                    RGB_MATRIX_INDICATOR_SET_COLOR(SOUND_MUTE_LED_INDEX, 255, 0, 0);
+                    sound_isred = true;
+                }
+            }
+            return false;
+    }
+    return true;
+}
+#    endif // SOUND_MUTE_LED_INDEX
+
 bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     if (!rgb_matrix_indicators_advanced_user(led_min, led_max)) {
         return false;
